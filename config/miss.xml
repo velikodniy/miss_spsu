@@ -1,0 +1,7 @@
+<uwsgi>
+    <socket>/tmp/miss.sock</socket>
+    <pythonpath>/srv/miss_spsu/</pythonpath>
+    <module>miss:app</module>
+    <plugins>python3</plugins>
+    <processes>8</processes>
+</uwsgi>

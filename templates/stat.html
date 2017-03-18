@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/mixitup.min.js"></script>
+
+    <title>Мисс ПГУ — {{ now.year }}</title>
+</head>
+
+<body>
+                <div class="container">
+                    <h2 style="text-align: center;">Мисс ПГУ — 2017</h2>
+                    <h3 style="text-align: center;">Результаты голосования</h3>
+                    <hr>
+                        <div class="info" style="font-size: 18pt;">
+
+                        </div>
+                    <hr>
+                </div>
+                
+
+                <script>
+                    function render(item) {
+                        return `
+                            <div class="item">
+                            
+                                <div class="row">
+                                    <div class="col-md-1 col-sm-1 col-xs-1">
+                                        ${item.girlid}.
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-5" style="text-align: left">
+                                        ${item.name}
+                                    </div>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                        ${item.faculty}
+                                    </div>
+                                    <div class="col-md-1 col-sm-1 col-xs-1">
+                                        ${item.votes}
+                                    </div>
+                                    <div class="progress" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="${item.percent}" aria-valuemin="0" aria-valuemax="100" style="width: ${item.percent}%;">
+                                            ${item.percent} %
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        `;
+                    };
+
+                    const container = document.querySelector('.info');
+
+                    const mixer = mixitup(container, {
+                        data: {
+                            uidKey: 'girlid',
+                            dirtyCheck: true
+                        },
+                        render: {
+                            target: render
+                        },
+                        selectors: {
+                            target: '.item'
+                        }
+                    });
+
+                    var timerId = setInterval(function() {
+                        $.getJSON( "/stat-data", function( data ) {
+                            data.sort(function(a, b) { return b.votes - a.votes;});
+                            mixer.dataset(data);
+                        });
+                    }, 2000);
+                </script>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

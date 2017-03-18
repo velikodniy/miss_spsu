@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Мисс ПГУ — {{ now.year }}</title>
+</head>
+<body>
+    <h1>Статус голосования</h1>
+
+    {% for m in msgs %}
+    <p>{{ m }}</p>
+    {% endfor %}
+
+    <p>
+        Голосование: <strong>{% if voting_started %}идёт{% else %}остановлено{% endif %}</strong>
+    </p>
+
+    <form method="POST" action="">
+        <input type="number" name="admin_key">
+        <input type="submit" value="Переключить">
+    </form>
+</body>
+</html>
