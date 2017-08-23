@@ -149,7 +149,7 @@ def vote(girlcode):
     girl_keys = ['girl:' + str(girl['girlid']) for girl in girls]
 
     with r.pipeline() as pipe:
-        while 1:
+        while True:
             try:
                 pipe.watch(code_key, *girl_keys)
                 votes = pipe.get(code_key)
