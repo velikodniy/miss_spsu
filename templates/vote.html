@@ -1,74 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block page %}
+    <ons-list modifier="inset">
+        <ons-list-header>Вы голосуете за</ons-list-header>
+        {% for girl in girls %}
+        <ons-list-item modifier="longdivider">{{ girl.name }}, <em>{{ girl.faculty }}</em></ons-list-item>
+        {% endfor %}
+    </ons-list>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-
-    <style>
-        .msg {
-            font-size: 14px;
-            max-width: 320px;
-            box-sizing: border-box;
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #fcc;
-            border-radius: 3px;
-            margin-left: 0
-        }
-    </style>
-
-    <title>Мисс ПГУ — {{ now.year }}</title>
-</head>
-
-<body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title">Мисс ПГУ — {{ now.year }}</span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-            </div>
-        </header>
-        <main class="mdl-layout__content">
-            <div class="page-content" style="margin-left: 12px; margin-top: 0px; margin-bottom: 12px;">
-
-                {% for m in msgs %}
-                <div class="msg">{{ m }}</div>
-                {% endfor %}
-
-                <ul style="list-style-type:none">
-                    {% for girl in girls %}
-                    <li>
-                        <span class="mdl-chip">
-                <span class="mdl-chip__text">{{ girl.girlid }}. {{ girl.name }}, <em>{{ girl.faculty }}</em></span>
-                        </span>
-                    </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="mdl-card__supporting-text">Для подтверждения введите свой код голосования.</div>
-
-                <form method="POST">
-                    <div class="mdl-textfield mdl-js-textfield">
-                        <input class="mdl-textfield__input" type="text" pattern="[0-9]*" name="code">
-                        <label class="mdl-textfield__label" for="sample2">Ваш код</label>
-                        <span class="mdl-textfield__error">Введите число!</span>
-                    </div>
-                    <br>
-                    <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" href="/">Отмена</a>
-                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" value="Голосовать">
-                </form>
-            </div>
-        </main>
-    </div>
-
-</body>
-</html>
+    <ons-card>
+        <div class="content">
+            <div style="text-align: center;">Для подтверждения введите свой код голосования.</div>
+            <form id="main_form" method="post">
+                <div style="text-align: center; margin-top: 30px;">
+                    <p>
+                        <ons-input id="code" name="code" modifier="underbar" placeholder="Код" pattern="[0-9]*" inputmode="numeric"></ons-input>
+                    </p>
+                    <p>
+                        <ons-button ripple modifier="quiet" onclick="window.location.href='/';">Отмена</ons-button>
+                        <ons-button ripple onclick="document.getElementById('main_form').submit();">Голосовать</ons-button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </ons-card>
+{% endblock %}

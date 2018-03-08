@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Мисс ПГУ — {{ now.year }}</title>
+    <title>Мисс ПГУ — {{ now.year }} — Администрирование</title>
+
+    <script>
+        function buttonClick(theButton){
+            document.getElementById('action').value = theButton.name;
+            return true;
+        }
+    </script>
 </head>
 <body>
-    <h1>Статус голосования</h1>
+    <h1>Администрирование</h1>
 
     {% for m in msgs %}
     <p>{{ m }}</p>
@@ -17,9 +24,20 @@
         Голосование: <strong>{% if voting_started %}идёт{% else %}остановлено{% endif %}</strong>
     </p>
 
-    <form method="POST" action="">
-        <input type="number" name="admin_key">
-        <input type="submit" value="Переключить">
+    <p>
+        Номера: <strong>{% if real_data %}реальные{% else %}демо (1..10000){% endif %}</strong>
+    </p>
+
+    <form id="admin-form" method="POST" action="">
+        <input type="hidden" id="action" name="action" value="">
+        <label>Пароль администратора</label>
+        <input type="password" name="admin_key">
+        <br />
+        <button name="load_real" onclick="return buttonClick(this)">Загрузить реальные номера</button>
+        <br />
+        <button name="toggle_voting" onclick="return buttonClick(this)">Переключить режим голосования</button>
+        <br />
+        <button name="show_log" onclick="return buttonClick(this)">Показать лог</button>
     </form>
 </body>
 </html>

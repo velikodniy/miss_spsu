@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+
+    <title>Мисс ПГУ — {{ now.year }}</title>
+</head>
+
+<body>
+<ons-page>
+    <ons-toolbar>
+        <div class="center">Мисс ПГУ — {{ now.year }}</div>
+    </ons-toolbar>
+
+{% block page %}{% endblock %}
+</ons-page>
+
+
+{% with messages = get_flashed_messages(category_filter=["message"]) %}
+{% if messages %}
+{% for m in messages %}
+<ons-toast id="message_{{ loop.index }}" animation="ascend">
+    {{ m }}
+    <button onclick="message_{{ loop.index }}.hide()">ok</button>
+</ons-toast>
+
+<script>
+    message_{{ loop.index }}.toggle();
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+{% with errors = get_flashed_messages(category_filter=["error"]) %}
+{% if errors %}
+{% for e in errors %}
+<ons-alert-dialog id="alert-dialog-{{ loop.index }}" modifier="rowfooter">
+    <div class="alert-dialog-title">Ошибка</div>
+    <div class="alert-dialog-content">
+        {{ e }}
+    </div>
+    <div class="alert-dialog-footer">
+        <ons-alert-dialog-button onclick="document.getElementById('alert-dialog-{{ loop.index }}').hide();">OK</ons-alert-dialog-button>
+    </div>
+</ons-alert-dialog>
+<script>
+    document.getElementById('alert-dialog-{{ loop.index }}').show();
+</script>
+{% endfor -%}
+{% endif %}
+{% endwith %}
+
+</body>
+</html>

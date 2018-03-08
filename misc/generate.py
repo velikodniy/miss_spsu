@@ -1,7 +1,7 @@
 # Генерируем случайные, не более, чем 6-значные, числа
 import random
 
-N = 550               # Количество номеров
+N = 560               # Количество номеров
 numbers = set()
 while len(numbers) < N:
     numbers.add(random.randrange(1000000))

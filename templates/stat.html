@@ -25,7 +25,7 @@
 
 <body>
                 <div class="container">
-                    <h2 style="text-align: center;">Мисс ПГУ — 2017</h2>
+                    <h2 style="text-align: center;">Мисс ПГУ — {{ now.year }}</h2>
                     <h3 style="text-align: center;">Результаты голосования</h3>
                     <hr>
                         <div class="info" style="font-size: 18pt;">
@@ -41,9 +41,9 @@
                             <div class="item">
                             
                                 <div class="row">
-                                    <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <!-- <div class="col-md-1 col-sm-1 col-xs-1">
                                         ${item.girlid}.
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-5 col-sm-5 col-xs-5" style="text-align: left">
                                         ${item.name}
                                     </div>
