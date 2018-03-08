@@ -236,6 +236,8 @@ def admin():
         return Response(logs, mimetype='text/plain')
     elif action == 'load_real':
         base.load_real_data()
+    elif action == 'load_fake':
+        base.load_fake_data()
 
     return redirect(url_for('admin'))
 
